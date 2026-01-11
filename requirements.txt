@@ -18,6 +18,7 @@ pytesseract
 pdf2image
 numpy
 scipy
+torch==2.2.2 --extra-index-url https://download.pytorch.org/whl/cpu
 requests
 packaging
 tqdm

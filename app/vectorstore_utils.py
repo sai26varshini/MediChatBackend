@@ -1,4 +1,5 @@
 import os
+import shutil
 from typing import List
 from langchain_community.vectorstores import FAISS
 from langchain_community.embeddings import HuggingFaceEmbeddings
@@ -33,9 +34,6 @@ def update_faiss_index(file_path: str):
     """Extracts text from PDF → Adds to existing FAISS or creates new."""
     text = extract_text_from_pdf(file_path)
     existing = load_or_create_index()
-
-    if existing:
-        existing.add_texts([text])
-        return existing
-    else:
-        return create_faiss_index([text])
+    if existing and existing.index.d != len(embeddings.embed_query("test")):
+        shutil.rmtree(VECTOR_DB_PATH, ignore_errors=True)
+        existing = None
